@@ -1,3 +1,9 @@
+<b>Faster  Heatmap Creator</b>
+<br>
+<a href="300k_by_8.csv" target="_blank">Sample Gene File Download</a>
+<br>
+<img src="morpheus.png" alt="matrix" style="width:304px;height:228px;">
+
 <head>
         <!-- Numeric.js -->
  <script src="    https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> 
@@ -8,6 +14,29 @@
         </head>
         <body>
         <!-- Plotly chart will be drawn inside this DIV -->
+<form id="frm1" action="form_action.asp">
+  High color: <input type="text" name="highcolor" value="#fffa8a"><br>
+  Low color : <input type="text" name="lowcolor" value="#ff756b"><br><br>
+  <input type="submit" value="Submit">
+</form>
+<script>
+function getOption() {
+    var obj = document.getElementById("mySelect");
+    document.getElementById("demo").innerHTML =
+    obj.options[obj.selectedIndex].text;
+}
+</script>
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var x = document.getElementById("frm1").method;
+    document.getElementById("demo").innerHTML = x;
+}
+</script>
+
         <div id="myDiv"></div>
         <script>
         function makeplot() {
@@ -60,17 +89,29 @@ function processData(allRows) {
 makeplot(); 
 //popData(); 
 
+function setColor(){
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "color");
+    document.body.appendChild(x);
+
+}
 function getResult(){
       if (!wait) {
-                   var xValues = ['A', 'B', 'C', 'D', 'E'];
+                   var xValues = ['A', 'B','C','D','E'];
 
 var yValues = ['W', 'X', 'Y', 'Z'];
 
-//console.log(zValues); 
+//console.log(zValues);
+var x= setColor() 
+
+var colorScaled= setColor()
 
 var colorscaleValue = [
-  [0, '#3D9970'],
-  [1, '#001f3f']
+     
+  [0, x.getAttribute("color")
+],
+  [1, colorScaled.getAttribute("color")
+]
 ];
 
 var data = [{
@@ -83,7 +124,7 @@ var data = [{
 }];
 
 var layout = {
-  title: 'Annotated Heatmap',
+  title: 'High Performance Interactive Heatmap',
   annotations: [],
   xaxis: {
     ticks: '',
@@ -134,6 +175,12 @@ Plotly.newPlot('myDiv', data, layout);
 
 getResult(); 
         </script>
+
+
+
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
 <output id="list"></output>
         </body>
+<br>
+<br.
+<b>version 1.02 <b>
