@@ -1,10 +1,25 @@
-<b>Faster  Heatmap Creator</b>
+<!DOCTYPE HTML>
+<html>
+<b>Fast  Heatmap Creator</b>
 <br>
 <a href="300k_by_8.csv" target="_blank">Sample Gene File Download</a>
 <br>
 <img src="morpheus.png" alt="matrix" style="width:304px;height:228px;">
-
+<br>
+<br>
+<style>
+.error {color: #FF0000;}
+</style>
+<b>version 0.25 removed color.php <b>
 <head>
+
+        <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/layout.css" />
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/colorpicker.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
         <!-- Numeric.js -->
  <script src="    https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> 
 <!-- Plotly.js -->
@@ -14,29 +29,32 @@
         </head>
         <body>
         <!-- Plotly chart will be drawn inside this DIV -->
-<form id="frm1" action="form_action.asp">
-  High color: <input type="text" name="highcolor" value="#fffa8a"><br>
-  Low color : <input type="text" name="lowcolor" value="#ff756b"><br><br>
-  <input type="submit" value="Submit">
+<script>
+    
+function setColor(){
+
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "color");
+    document.body.appendChild(x);
+
+
+}
+ peace= new setColor() ;
+ color = new setColor();
+
+</script>
+
+<h2>Enter Colors Here</h2>
+<p><span class="error">* required field.</span></p>
+<form method="post" action="">  
+  HighColor: <input type="text" name="highcolor" value=<?php echo $name;?>>
+  <span class="error">*<?php echo $nameErr;?> </span>
+  <br><br>
+  LowColor: <input type="text" name="lowcolor" value=<?php echo $email;?>>
+  <span class="error">*<?php echo $emailErr;?> </span>
+  <br><br>
+   <input type="submit"  value="Submit">  
 </form>
-<script>
-function getOption() {
-    var obj = document.getElementById("mySelect");
-    document.getElementById("demo").innerHTML =
-    obj.options[obj.selectedIndex].text;
-}
-</script>
-<button onclick="myFunction()">Try it</button>
-
-<p id="demo"></p>
-
-<script>
-function myFunction() {
-    var x = document.getElementById("frm1").method;
-    document.getElementById("demo").innerHTML = x;
-}
-</script>
-
         <div id="myDiv"></div>
         <script>
         function makeplot() {
@@ -90,9 +108,11 @@ makeplot();
 //popData(); 
 
 function setColor(){
+				
     var x = document.createElement("INPUT");
     x.setAttribute("type", "color");
     document.body.appendChild(x);
+    
 
 }
 function getResult(){
@@ -102,16 +122,14 @@ function getResult(){
 var yValues = ['W', 'X', 'Y', 'Z'];
 
 //console.log(zValues);
-var x= setColor() 
-
-var colorScaled= setColor()
+var peacer= new setColor() 
+var colorScaled= new setColor()
 
 var colorscaleValue = [
-     
-  [0, x.getAttribute("color")
-],
-  [1, colorScaled.getAttribute("color")
-]
+ 
+				
+  [0, <?php  $_REQUEST["highcolor"] ?> ],
+  [1, <?php $_REQUEST["lowcolor"]?>]
 ];
 
 var data = [{
@@ -181,6 +199,4 @@ getResult();
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
 <output id="list"></output>
         </body>
-<br>
-<br.
-<b>version 1.02 <b>
+</html>
