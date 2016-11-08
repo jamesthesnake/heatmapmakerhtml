@@ -10,7 +10,7 @@
 <style>
 .error {color: #FF0000;}
 </style>
-<b>version 0.25 removed color.php <b>
+<b>version 0.36 <b>
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -28,10 +28,8 @@
         <!--<script src='libs/numeric.min.js'></script>=--> 
         </head>
         <body>
-        <!-- Plotly chart will be drawn inside this DIV -->
 <script>
-    
-function setColor(){
+function setColors(){
 
     var x = document.createElement("INPUT");
     x.setAttribute("type", "color");
@@ -39,23 +37,26 @@ function setColor(){
 
 
 }
- peace= new setColor() ;
- color = new setColor();
 
 </script>
+        <!-- Plotly chart will be drawn inside this DIV -->
 
+<!--
 <h2>Enter Colors Here</h2>
 <p><span class="error">* required field.</span></p>
-<form method="post" action="">  
-  HighColor: <input type="text" name="highcolor" value=<?php echo $name;?>>
-  <span class="error">*<?php echo $nameErr;?> </span>
+<form method="post" action="colorwheel.php">  
+  HighColor: <input type="text" name="highcolor" value=<?php echo $color;?>>
+  <span class="error">*<?php echo $colorErr;?> </span>
   <br><br>
-  LowColor: <input type="text" name="lowcolor" value=<?php echo $email;?>>
-  <span class="error">*<?php echo $emailErr;?> </span>
+  LowColor: <input type="text" name="lowcolor" value=<?php echo $lowColor;?>>
+  <span class="error">*<?php echo $lowColorErr;?> </span>
   <br><br>
    <input type="submit"  value="Submit">  
-</form>
+</form> -->
         <div id="myDiv"></div>
+
+<!--<button onclick="setColors()">Click me</button>-->
+
         <script>
         function makeplot() {
   //Plotly.d3.csv("localhost", function(data){ processData(data) } );
@@ -109,27 +110,34 @@ makeplot();
 
 function setColor(){
 				
-    var x = document.createElement("INPUT");
-    x.setAttribute("type", "color");
-    document.body.appendChild(x);
+    var heat = document.createElement("INPUT");
+    heat.setAttribute("type", "color");
+    document.body.appendChild(heat);
     
 
+
+
+ 
+
 }
+
+
+
 function getResult(){
+     
+				
       if (!wait) {
                    var xValues = ['A', 'B','C','D','E'];
 
 var yValues = ['W', 'X', 'Y', 'Z'];
 
 //console.log(zValues);
-var peacer= new setColor() 
-var colorScaled= new setColor()
 
 var colorscaleValue = [
  
 				
-  [0, <?php  $_REQUEST["highcolor"] ?> ],
-  [1, <?php $_REQUEST["lowcolor"]?>]
+  [0, "red"],
+  [1, "green"]
 ];
 
 var data = [{
