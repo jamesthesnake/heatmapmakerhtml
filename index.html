@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 </style>
-<b>version 0.74<b>
+<b>version 0.75<b>
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -49,11 +49,11 @@
 
 
         <h2>Example 1</h2>
-        Color: <input  class="jscolor" type="text" id="color"  value="ab2567">
+        Color: <input  class="jscolor" id="color"  value="ab2567">
 
 
 
-        <h2>Color 1</h2>
+        <h3>Color 1</h3>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
                 Pick first heatmap color
@@ -63,12 +63,13 @@
 
         <script>
         function setTextColor(picker) {
-                document.getElementsByTagName('body')[0].style.color = '#' + picker.toString()
+                document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString()
 	       
 	        var heat =  '#' + picker.toString() 
         }
 	
         </script>
+
         
 
 
@@ -182,15 +183,15 @@ var yValues = ['W', 'X', 'Y', 'Z'];
 
 
 
-var age= document.getElementsById('color').value;
+
 
 //console.log(zValues);
-
+var age= "#" + document.getElementsById('color').value.toString();
 var colorscaleValue = [
  
 				
-  [0,document.getElementsByTagName('body')[0].style.color],
-  [1,"blue"]
+  [0,document.getElementsByTagName('h2')[0].style.color],
+  [1,age]
 ];
 
 var data = [{
