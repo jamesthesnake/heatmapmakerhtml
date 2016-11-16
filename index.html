@@ -50,14 +50,14 @@
 
 
         <h2>Color 1</h2>
-        Color: <input  class="jscolor" id="color"  value="ab2567">
+        Color 1: <input  class="jscolor" id="color"  value="ab2567">
 
 
 
         <h3>Color 2</h3>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
-                Pick first heatmap color
+                Pick second heatmap color
         </button>
 
          <input id="chosen-value" value="000000">
@@ -66,8 +66,8 @@
 	 <script>
         function setTextColor(picker) {
                 document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
-         	var age=  document.getElementsById('color')[0].value.toString();       
-	            document.getElementById("demo").innerHTML = age;
+
+
 
         }
 	
@@ -189,7 +189,7 @@ var yValues = ['W', 'X', 'Y', 'Z'];
 
 
 //console.log(zValues);
-var age= '#' + document.getElementsByClassName('color')[0].value.toString();
+var age= '#' + document.getElementsByClassName('jscolor')[0].value.toString();
 var colorscaleValue = [
  
 				
