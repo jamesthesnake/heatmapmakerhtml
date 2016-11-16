@@ -60,12 +60,14 @@
         </button>
 
          <input id="chosen-value" value="000000">
-
-        <script>
+	 <p id="demo"></p>
+       <br>
+	 <script>
         function setTextColor(picker) {
-                document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString()
-	       
-	        var heat =  '#' + picker.toString() 
+                document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
+         	var age= "#" + document.getElementsById('color').value.toString();       
+	            document.getElementById("demo").innerHTML = "bam";
+
         }
 	
         </script>
