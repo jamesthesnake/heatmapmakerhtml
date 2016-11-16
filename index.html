@@ -9,8 +9,20 @@
 <br>
 <style>
 .error {color: #FF0000;}
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: red;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
 </style>
-<b>version 0.65<b>
+<b>version 0.73<b>
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -28,8 +40,8 @@
         <!--<script src='libs/numeric.min.js'></script>=--> 
         </head>
         <body>
-<area id = "greatOnes"></area>
-
+<area> here we go</area>
+<bay > choose your colors!</bay>
 
 
         <script src="jscolor.js"></script>
@@ -37,17 +49,17 @@
 
 
         <h2>Example 1</h2>
-        Color: <input class="jscolor" value="ab2567">
+        <area>Color: <input  class="jscolor" type="text" id="color"  value="ab2567"></area>
 
 
 
         <h2>Color 1</h2>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
-                Pick text color
+                Pick first heatmap color
         </button>
 
-        HEX value: <input id="chosen-value" value="000000">
+         <input id="chosen-value" value="000000">
 
         <script>
         function setTextColor(picker) {
@@ -57,27 +69,7 @@
 	
         </script>
         
-    
-<h2>Example 2</h2>
-        Color: <input class="jscolor" value="ab2567">
 
-
-
-        <h2>color 2</h2>
-
-       <!-- <button class="jscolor {valueElement:'chosen-values', onFineChange:'setTextColor(this)'}">
-                Pick text color
-        </button>-->
-
-        HEX value: <input id="chosen-values" value="000000">
-
-        <script>
-        function setTextColors(picker) {
-                document.getElementsByTagName('area')[0].style.color = '#' + picker.toString()
-
-        }
-
-        </script>
 
 
 
@@ -197,7 +189,7 @@ var colorscaleValue = [
  
 				
   [0,document.getElementsByTagName('body')[0].style.color],
-  [1,"red"]
+  [1,"blue"]<!--document.getElementsById('color')[0].value]-->
 ];
 
 var data = [{
