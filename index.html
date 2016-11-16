@@ -10,7 +10,7 @@
 <style>
 .error {color: #FF0000;}
 </style>
-<b>version 0.36 <b>
+<b>version 0.65<b>
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -28,6 +28,65 @@
         <!--<script src='libs/numeric.min.js'></script>=--> 
         </head>
         <body>
+<area id = "greatOnes"></area>
+
+
+
+        <script src="jscolor.js"></script>
+
+
+
+        <h2>Example 1</h2>
+        Color: <input class="jscolor" value="ab2567">
+
+
+
+        <h2>Color 1</h2>
+
+        <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
+                Pick text color
+        </button>
+
+        HEX value: <input id="chosen-value" value="000000">
+
+        <script>
+        function setTextColor(picker) {
+                document.getElementsByTagName('body')[0].style.color = '#' + picker.toString()
+	        var heat =  '#' + picker.toString() 
+        }
+	
+        </script>
+        
+    
+<h2>Example 2</h2>
+        Color: <input class="jscolor" value="ab2567">
+
+
+
+        <h2>color 2</h2>
+
+       <!-- <button class="jscolor {valueElement:'chosen-values', onFineChange:'setTextColor(this)'}">
+                Pick text color
+        </button>-->
+
+        HEX value: <input id="chosen-values" value="000000">
+
+        <script>
+        function setTextColors(picker) {
+                document.getElementsByTagName('area')[0].style.color = '#' + picker.toString()
+
+        }
+
+        </script>
+
+
+
+
+
+
+
+
+
 <script>
 function setColors(){
 
@@ -37,7 +96,6 @@ function setColors(){
 
 
 }
-
 </script>
         <!-- Plotly chart will be drawn inside this DIV -->
 
@@ -63,7 +121,7 @@ function setColors(){
 
 };
 
-
+var heats ="ff1550";
 var wait = true; 
 var zValues = [];
 function popData(fl) { 
@@ -121,8 +179,6 @@ function setColor(){
 
 }
 
-
-
 function getResult(){
      
 				
@@ -131,13 +187,17 @@ function getResult(){
 
 var yValues = ['W', 'X', 'Y', 'Z'];
 
+
+
+
+
 //console.log(zValues);
 
 var colorscaleValue = [
  
 				
-  [0, "red"],
-  [1, "green"]
+  [0,document.getElementsByTagName('body')[0].style.color],
+  [1,"red"]
 ];
 
 var data = [{
