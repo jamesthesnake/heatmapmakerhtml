@@ -42,31 +42,32 @@
         <body>
 
 <bay > choose your colors!</bay>
+         <p id="demo"></p>
 
 
         <script src="jscolor.js"></script>
 
 
 
-        <h2>Example 1</h2>
+        <h2>Color 1</h2>
         Color: <input  class="jscolor" id="color"  value="ab2567">
 
 
 
-        <h3>Color 1</h3>
+        <h3>Color 2</h3>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
                 Pick first heatmap color
         </button>
 
          <input id="chosen-value" value="000000">
-	 <p id="demo"></p>
+
        <br>
 	 <script>
         function setTextColor(picker) {
                 document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
-         	var age= "#" + document.getElementsById('color').value.toString();       
-	            document.getElementById("demo").innerHTML = "bam";
+         	var age=  document.getElementsById('color')[0].value.toString();       
+	            document.getElementById("demo").innerHTML = age;
 
         }
 	
@@ -188,7 +189,7 @@ var yValues = ['W', 'X', 'Y', 'Z'];
 
 
 //console.log(zValues);
-var age= "#" + document.getElementsById('color').value.toString();
+var age= '#' + document.getElementsByClassName('color')[0].value.toString();
 var colorscaleValue = [
  
 				
