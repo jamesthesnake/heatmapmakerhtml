@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 </style>
-<b>version 0.75<b>
+<b>version 0.76 color interactivity <b>
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -49,12 +49,12 @@
 
 
 
-        <h2>Color 1</h2>
-        Color 1: <input  class="jscolor" id="color"  value="ab2567">
+       <h2>Color 1</h2>
+         <input  class="jscolor" id="color"  value="ab2567">
 
 
 
-        <h3>Color 2</h3>
+        <h3><b>Color 2<b></h3>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
                 Pick second heatmap color
@@ -95,7 +95,7 @@ function setColors(){
 }
 </script>
         <!-- Plotly chart will be drawn inside this DIV -->
-
+<button onclick = "makeplot()">make plot!</button>
 <!--
 <h2>Enter Colors Here</h2>
 <p><span class="error">* required field.</span></p>
@@ -263,5 +263,8 @@ getResult();
 
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
 <output id="list"></output>
+
+questions? email james.ryan.hennessy@gmail.com
+
         </body>
 </html>
