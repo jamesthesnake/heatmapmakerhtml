@@ -4,11 +4,15 @@
 <br>
 <a href="300k_by_8.csv" target="_blank">Sample Gene File Download</a>
 <br>
-<img src="morpheus.png" alt="matrix" style="width:304px;height:228px;">
+<img src="morpheus.png" alt="matrix" style="width:304px;height:228px" align="middle";>
 <br>
 <br>
 <style>
 .error {color: #FF0000;}
+h1 {
+    color: green;
+}
+
 .button {
     background-color: #4CAF50;
     border: none;
@@ -21,8 +25,14 @@
     margin: 4px 2px;
     cursor: pointer;
 }
+h6{
+    width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+}
 </style>
-<b>version 0.76 color interactivity <b>
+
 <head>
 
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
@@ -41,48 +51,54 @@
         </head>
         <body>
 
-<bay > choose your colors!</bay>
-         <p id="demo"></p>
+ <h4>1.31 choose your colors!</h4>
+        <h3> <p id="demo"></p></h3>
+
+	<h6>  <p>Step 1: Upload your heatmap file as csv </p>
+<p>Step 2: Choose your high and low colors</p>
+<p>Step 3: The heatmap is made automatically, you can zoom in, zoom out, and other functions provided in the heatmap palette</p>
+ </h6>
+
 
 
         <script src="jscolor.js"></script>
 
 
+       
+       <h1><b>High Color<b></h1>
+         
+<button
+   id="low"
+  class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColorTwo(this)'}">
+     Pick first heatmap  Color </button>
 
-       <h2>Color 1</h2>
-         <input  class="jscolor" id="color"  value="ab2567">
-
-
-
-        <h3><b>Color 2<b></h3>
+        <h1><b>Low Color<b></h1>
 
         <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
-                Pick second heatmap color
+   Pick second heatmap color
         </button>
 
-         <input id="chosen-value" value="000000">
+         <input  id="chosen-value" value="000000">
 
        <br>
+
 	 <script>
         function setTextColor(picker) {
+                document.getElementsByTagName('h1')[0].style.color = '#' + picker.toString();
+
+
+
+        }
+	<script>
+        function setTextColorTwo(picker) {
                 document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
 
 
 
         }
-	
         </script>
 
         
-
-
-
-
-
-
-
-
-
 
 <script>
 function setColors(){
@@ -95,20 +111,12 @@ function setColors(){
 }
 </script>
         <!-- Plotly chart will be drawn inside this DIV -->
-<button onclick = "makeplot()">make plot!</button>
-<!--
-<h2>Enter Colors Here</h2>
-<p><span class="error">* required field.</span></p>
-<form method="post" action="colorwheel.php">  
-  HighColor: <input type="text" name="highcolor" value=<?php echo $color;?>>
-  <span class="error">*<?php echo $colorErr;?> </span>
-  <br><br>
-  LowColor: <input type="text" name="lowcolor" value=<?php echo $lowColor;?>>
-  <span class="error">*<?php echo $lowColorErr;?> </span>
-  <br><br>
-   <input type="submit"  value="Submit">  
-</form> -->
-        <div id="myDiv"></div>
+
+
+
+<div id="myDiv"></div>
+
+
 
 <!--<button onclick="setColors()">Click me</button>-->
 
@@ -189,12 +197,17 @@ var yValues = ['W', 'X', 'Y', 'Z'];
 
 
 //console.log(zValues);
-var age= '#' + document.getElementsByClassName('jscolor')[0].value.toString();
+<!--var age= '#' + document.getElementsById('low')[0].value.toString();
+   
+var rage =    document.getElementById('h4').style.backgroundColor -->
+
+<!--va rage='#' + document.getElementsByClassName('styleSpan')[0].value.toString();-->
+
 var colorscaleValue = [
  
 				
-  [0,document.getElementsByTagName('h2')[0].style.color],
-  [1,age]
+  [0,"blue"],
+  [1,"red"]
 ];
 
 var data = [{
@@ -220,6 +233,7 @@ var layout = {
     height: 700,
     autosize: false
   }
+
 };
 
 for ( var i = 0; i < yValues.length; i++ ) {
@@ -257,14 +271,13 @@ Plotly.newPlot('myDiv', data, layout);
  }
 
 getResult(); 
+
         </script>
 
 
 
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
 <output id="list"></output>
-
-questions? email james.ryan.hennessy@gmail.com
 
         </body>
 </html>
