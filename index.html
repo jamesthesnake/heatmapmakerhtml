@@ -51,7 +51,7 @@ h6{
         </head>
         <body>
 
- <h4>1.31 choose your colors!</h4>
+ <h4>1.33 choose your colors!</h4>
         <h3> <p id="demo"></p></h3>
 
 	<h6>  <p>Step 1: Upload your heatmap file as csv </p>
@@ -65,35 +65,33 @@ h6{
 
 
        
-       <h1><b>High Color<b></h1>
+       <h1><b>Low Color<b></h1>
          
-<button
+<h5><button
    id="low"
   class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColorTwo(this)'}">
-     Pick first heatmap  Color </button>
+     Pick first heatmap  color </button></h5>
 
-        <h1><b>Low Color<b></h1>
+        <h1><b>High Color<b></h1>
 
-        <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
+       <h2> <button class="jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
    Pick second heatmap color
-        </button>
+        </button></h2>
 
-         <input  id="chosen-value" value="000000">
+         <input type="hidden"  id="chosen-value" value="000000">
 
        <br>
 
 	 <script>
         function setTextColor(picker) {
-                document.getElementsByTagName('h1')[0].style.color = '#' + picker.toString();
+  document.getElementsByTagName('h5')[0].style.color = '#' + picker.toString();
+}
+     </script>
 
-
-
-        }
+        
 	<script>
         function setTextColorTwo(picker) {
-                document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
-
-
+  document.getElementsByTagName('h2')[0].style.color = '#' + picker.toString();
 
         }
         </script>
@@ -119,14 +117,13 @@ function setColors(){
 
 
 <!--<button onclick="setColors()">Click me</button>-->
-
-        <script>
-        function makeplot() {
+<script>
+function makeplot() {
   //Plotly.d3.csv("localhost", function(data){ processData(data) } );
 
 };
 
-var heats ="ff1550";
+
 var wait = true; 
 var zValues = [];
 function popData(fl) { 
@@ -172,42 +169,28 @@ makeplot();
 //popData(); 
 
 function setColor(){
-				
-    var heat = document.createElement("INPUT");
-    heat.setAttribute("type", "color");
-    document.body.appendChild(heat);
+				  
+    var x = document.createElement("INPUT");
+    x.setAttribute("type", "color");
+    document.body.appendChild(x);
     
 
-
-
- 
-
 }
-
 function getResult(){
-     
-				
       if (!wait) {
-                   var xValues = ['A', 'B','C','D','E'];
+                   var xValues = [' Team A', ' Team B',' Team C',' Team D',' Team E'];
 
-var yValues = ['W', 'X', 'Y', 'Z'];
-
-
-
-
+var yValues = ['Team W', 'Team X', 'Team Y', 'Team Z'];
 
 //console.log(zValues);
-<!--var age= '#' + document.getElementsById('low')[0].value.toString();
-   
-var rage =    document.getElementById('h4').style.backgroundColor -->
 
-<!--va rage='#' + document.getElementsByClassName('styleSpan')[0].value.toString();-->
-
+var age= document.getElementsByTagName('h5')[0].style.color;
+var rude = document.getElementsByTagName('h2')[0].style.color;
 var colorscaleValue = [
  
-				
-  [0,"blue"],
-  [1,"red"]
+				  
+  [0,age],
+  [1,rude]
 ];
 
 var data = [{
@@ -233,7 +216,6 @@ var layout = {
     height: 700,
     autosize: false
   }
-
 };
 
 for ( var i = 0; i < yValues.length; i++ ) {
@@ -271,10 +253,28 @@ Plotly.newPlot('myDiv', data, layout);
  }
 
 getResult(); 
-
         </script>
 
+<script src="d3.min.js?v=3.2.8"></script>
 
+        <script type="text/javascript"charset="utf-8">
+            d3.text("data.csv", function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("body")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });
+        </script>
+    </body>
 
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
 <output id="list"></output>
