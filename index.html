@@ -8,6 +8,10 @@
 <br>
 <br>
 <style>
+pre{
+display:none;
+}
+
 .error {color: #FF0000;}
 h1 {
     color: green;
@@ -51,7 +55,18 @@ h6{
         </head>
         <body>
 
- <h4>1.33 choose your colors!</h4>
+<script src="d3.min.js?v=3.2.8"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="jquery-csv.js"></script>
+
+
+
+
+
+
+           
+
+ <h4>1.46 choose your colors!</h4>
         <h3> <p id="demo"></p></h3>
 
 	<h6>  <p>Step 1: Upload your heatmap file as csv </p>
@@ -114,23 +129,69 @@ function setColors(){
 
 <div id="myDiv"></div>
 
+<script type="text/javascript"charset="utf-8"> 
+    var file   = document.getElementById("files").files[0];
+                         
+        d3.text(file, function(data) {                                
+            var parsedCSV = d3.csv.parseRows(data);                         
 
+            var container = d3.select("body")                               
+                .append("table")                                            
 
+                .selectAll("tr")                                            
+                    .data(parsedCSV).enter()                                
+                    .append("tr")                                           
+
+              .selectAll("td")                                        
+                    .data(function(d) { return d; }).enter()                
+                    .append("td")                                           
+                    .text(function(d) { return d; });                       
+        });
+</script>
 <!--<button onclick="setColors()">Click me</button>-->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<pre id="csv">
+Device Name,Platform,OS Version,Portrait Width,Landscape Width,Release Date
+Acer Iconia Tab A1-810,Android,4.2.2,768,1024,2013-05
+Acer Iconia Tab A100,Android,4.0.3,800,1280,2011-04
+Acer Iconia Tab A101,Android,3.2.1,600,1024,2011-05
+Acer Iconia Tab A200,Android,4.0.3,800,1280,2012-01
+Acer Iconia Tab A500,Android,4.0.3,648,1280,2011-04
+Acer Iconia Tab A501,Android,3.2,800,1280,2011-04
+ACER Liquid E2,Android,4.2.1,360,640,2013-05
+</pre>
 <script>
+    var file   = document.getElementById("files").files[0];
+
+var data = d3.csvParse(file);
+console.log(data.columns);
+</script>
+<script>
+
 function makeplot() {
   //Plotly.d3.csv("localhost", function(data){ processData(data) } );
 
 };
 
 
+
 var wait = true; 
 var zValues = [];
 function popData(fl) { 
 Plotly.d3.csv(fl, function(data) {
+
+
+
+
   dataset = data.map(function(d) { return [ +d["Control 1"], +d["Control 2"], +d["Exp3"], +d["Exp4"], +d["Exp5"], +d["Exp6"] ]; });
-  zValues = dataset; 
+     
+  console.log(Object.getOwnPropertyNames(dataset)); 
+    
+
+ zValues = dataset; 
   console.log(zValues); 
+
+
   wait = false; 
 }); 
 }; 
@@ -143,18 +204,27 @@ Plotly.d3.csv(fl, function(data) {
     var fileURI = reader.result;
     popData(fileURI);
     console.log("fired");
+    console.log(fileURI);
+
+
+
+
   }, false);
 
   if (file) {
     reader.readAsDataURL(file);
+
+
+
   }
      
   }
 //popData(); 
 
 function processData(allRows) {
-
+  consolelog("hello")
   console.log(allRows);
+  console.log(allRows[0]);
   zValues = allRows; 
   var x = [], y = [], standard_deviation = [];
 
@@ -177,6 +247,13 @@ function setColor(){
 
 }
 function getResult(){
+
+     var names = document.getElementsByName("files[]");
+   var data = d3.csvParse(names);
+console.log(data.columns);  
+console.log(names);
+
+
       if (!wait) {
                    var xValues = [' Team A', ' Team B',' Team C',' Team D',' Team E'];
 
@@ -255,25 +332,6 @@ Plotly.newPlot('myDiv', data, layout);
 getResult(); 
         </script>
 
-<script src="d3.min.js?v=3.2.8"></script>
-
-        <script type="text/javascript"charset="utf-8">
-            d3.text("data.csv", function(data) {
-                var parsedCSV = d3.csv.parseRows(data);
-
-                var container = d3.select("body")
-                    .append("table")
-
-                    .selectAll("tr")
-                        .data(parsedCSV).enter()
-                        .append("tr")
-
-                    .selectAll("td")
-                        .data(function(d) { return d; }).enter()
-                        .append("td")
-                        .text(function(d) { return d; });
-            });
-        </script>
     </body>
 
 <input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
