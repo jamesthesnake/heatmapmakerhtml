@@ -65,7 +65,7 @@ h6{
 <div id="wrap">
     <form action="javascript:void(0);" id="the_form">
        <input type="file" id="files" names="file[]" onchange="handleFileSelect()" required="required" accept=".csv"/>
-         <input type="submit" value="Go" class="btn"/>
+         <input type="submit" value="Go" class="btn" onClick="toDo()"/>
          </form>
    <div id="file_info"></div>
    <div id="list"></div>
@@ -139,7 +139,7 @@ function setColors(){
 
 <!--<button onclick="setColors()">Click me</button>-->
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script type="text/javascript">
+<!--<script type="text/javascript">
 
   function fileInfo(e){
   var file = e.target.files[0];
@@ -184,8 +184,52 @@ console.log('label array', labels)
  document.getElementById('the_form').addEventListener('submit', handleFileSelects, false);
  document.getElementById('files').addEventListener('change', fileInfo, false);
 
-</script>
+</script>-->
 <script>
+function toDo(){
+  var labels;
+  function fileInfo(e){
+  var file = e.target.files[0];
+  if (file.name.split(".")[1].toUpperCase() != "CSV") {
+  alert('Invalid csv file !');
+  e.target.parentNode.reset();
+  return;
+  }
+  }
+
+  function handleFileSelects(){
+  var file = document.getElementById("files").files[0],
+  reader = new FileReader();
+
+  reader.onload = function(file) {
+  var content = file.target.result,
+  rows = file.target.result.split(/[\r\n|\n]+/),
+  i = 0,
+  labels = [],
+  data = [],
+  tempData;
+
+  for (; i < rows.length; i++){
+	          tempData = rows[i].split(',')
+
+	          if (i === 0) {
+	          labels = tempData;
+	          }
+
+	          //If you dont' want labels in the dataset then put this in the else statement
+				   data.push(tempData);
+				      }
+
+
+console.log('full data set', data)
+console.log('label array', labels)
+			      };
+
+			           reader.readAsText(file);
+ }
+
+ document.getElementById('the_form').addEventListener('submit', handleFileSelects, false);
+ document.getElementById('files').addEventListener('change', fileInfo, false);
 
 function makeplot() {
   //Plotly.d3.csv("localhost", function(data){ processData(data) } );
@@ -256,7 +300,7 @@ function processData(allRows) {
 
 makeplot(); 
 //popData(); 
-
+console.log("moanao",file.labels);
 function setColor(){
 				  
     var x = document.createElement("INPUT");
@@ -345,6 +389,7 @@ Plotly.newPlot('myDiv', data, layout);
  }
 
 getResult(); 
+}
         </script>
 
     </body>
