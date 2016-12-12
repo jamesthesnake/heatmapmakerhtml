@@ -62,7 +62,14 @@ h6{
 
 
 
-
+<div id="wrap">
+    <form action="javascript:void(0);" id="the_form">
+       <input type="file" id="files" names="file[]" onchange="handleFileSelect()" required="required" accept=".csv"/>
+         <input type="submit" value="Go" class="btn"/>
+         </form>
+   <div id="file_info"></div>
+   <div id="list"></div>
+  </div>
 
            
 
@@ -129,42 +136,54 @@ function setColors(){
 
 <div id="myDiv"></div>
 
-<script type="text/javascript"charset="utf-8"> 
-    var file   = document.getElementById("files").files[0];
-                         
-        d3.text(file, function(data) {                                
-            var parsedCSV = d3.csv.parseRows(data);                         
 
-            var container = d3.select("body")                               
-                .append("table")                                            
-
-                .selectAll("tr")                                            
-                    .data(parsedCSV).enter()                                
-                    .append("tr")                                           
-
-              .selectAll("td")                                        
-                    .data(function(d) { return d; }).enter()                
-                    .append("td")                                           
-                    .text(function(d) { return d; });                       
-        });
-</script>
 <!--<button onclick="setColors()">Click me</button>-->
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<pre id="csv">
-Device Name,Platform,OS Version,Portrait Width,Landscape Width,Release Date
-Acer Iconia Tab A1-810,Android,4.2.2,768,1024,2013-05
-Acer Iconia Tab A100,Android,4.0.3,800,1280,2011-04
-Acer Iconia Tab A101,Android,3.2.1,600,1024,2011-05
-Acer Iconia Tab A200,Android,4.0.3,800,1280,2012-01
-Acer Iconia Tab A500,Android,4.0.3,648,1280,2011-04
-Acer Iconia Tab A501,Android,3.2,800,1280,2011-04
-ACER Liquid E2,Android,4.2.1,360,640,2013-05
-</pre>
-<script>
-    var file   = document.getElementById("files").files[0];
+<script type="text/javascript">
 
-var data = d3.csvParse(file);
-console.log(data.columns);
+  function fileInfo(e){
+  var file = e.target.files[0];
+  if (file.name.split(".")[1].toUpperCase() != "CSV") {
+  alert('Invalid csv file !');
+  e.target.parentNode.reset();
+  return;
+  }
+  }
+
+  function handleFileSelects(){
+  var file = document.getElementById("files").files[0],
+  reader = new FileReader();
+
+  reader.onload = function(file) {
+  var content = file.target.result,
+  rows = file.target.result.split(/[\r\n|\n]+/),
+  i = 0,
+  labels = [],
+  data = [],
+  tempData;
+
+  for (; i < rows.length; i++){
+	     tempData = rows[i].split(',')
+
+	     if (i === 0) {
+	     labels = tempData;
+	     }
+
+	     //If you dont' want labels in the dataset then put this in the else statement
+			   data.push(tempData);
+			   }
+
+
+console.log('full data set', data)
+console.log('label array', labels)
+	     };
+
+	     reader.readAsText(file);
+ }
+
+ document.getElementById('the_form').addEventListener('submit', handleFileSelects, false);
+ document.getElementById('files').addEventListener('change', fileInfo, false);
+
 </script>
 <script>
 
@@ -222,9 +241,9 @@ Plotly.d3.csv(fl, function(data) {
 //popData(); 
 
 function processData(allRows) {
-  consolelog("hello")
-  console.log(allRows);
-  console.log(allRows[0]);
+
+
+
   zValues = allRows; 
   var x = [], y = [], standard_deviation = [];
 
@@ -248,14 +267,10 @@ function setColor(){
 }
 function getResult(){
 
-     var names = document.getElementsByName("files[]");
-   var data = d3.csvParse(names);
-console.log(data.columns);  
-console.log(names);
 
 
       if (!wait) {
-                   var xValues = [' Team A', ' Team B',' Team C',' Team D',' Team E'];
+                   var xValues = labels;<!-- [' Team A', ' Team B',' Team C',' Team D',' Team E'];-->
 
 var yValues = ['Team W', 'Team X', 'Team Y', 'Team Z'];
 
@@ -334,8 +349,8 @@ getResult();
 
     </body>
 
-<input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
-<output id="list"></output>
+<!--<input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
+<output id="list"></output>-->
 
         </body>
 </html>
