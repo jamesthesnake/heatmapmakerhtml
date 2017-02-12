@@ -39,6 +39,7 @@ h6{
 
 <head>
 
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
     <link rel="stylesheet" media="screen" type="text/css" href="css/layout.css" />
         <script type="text/javascript" src="js/jquery.js"></script>
@@ -54,6 +55,7 @@ h6{
         <!--<script src='libs/numeric.min.js'></script>=--> 
         </head>
         <body>
+	  <script src="plotly-latest.min.js"></script>
 
 <script src="d3.min.js?v=3.2.8"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -62,22 +64,14 @@ h6{
 
 
 
-<div id="wrap">
-    <form action="javascript:void(0);" id="the_form">
-       <input type="file" id="files" names="file[]" onchange="handleFileSelect()" required="required" accept=".csv"/>
-         <input type="submit" value="Go" class="btn" onClick="toDo()"/>
-         </form>
-   <div id="file_info"></div>
-   <div id="list"></div>
-  </div>
 
            
 
- <h4>1.46 choose your colors!</h4>
+ <h4>Welcome!</h4>
         <h3> <p id="demo"></p></h3>
 
-	<h6>  <p>Step 1: Upload your heatmap file as csv </p>
-<p>Step 2: Choose your high and low colors</p>
+	<h6>  <p>Step 1:  Choose your high and low colors </p>
+<p>Step 2:Upload your heatmap file as csv </p>
 <p>Step 3: The heatmap is made automatically, you can zoom in, zoom out, and other functions provided in the heatmap palette</p>
  </h6>
 
@@ -134,102 +128,67 @@ function setColors(){
 
 
 
-<div id="myDiv"></div>
-
+<!--<div id="myDiv"></div>-->
 
 <!--<button onclick="setColors()">Click me</button>-->
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<!--<script type="text/javascript">
 
-  function fileInfo(e){
-  var file = e.target.files[0];
-  if (file.name.split(".")[1].toUpperCase() != "CSV") {
-  alert('Invalid csv file !');
-  e.target.parentNode.reset();
-  return;
-  }
-  }
+<script type="text/javascript">
 
-  function handleFileSelects(){
-  var file = document.getElementById("files").files[0],
-  reader = new FileReader();
+	function fileInfo(e){
+		var file = e.target.files[0];
+		if (file.name.split(".")[1].toUpperCase() != "CSV") {
+			alert('Invalid csv file !');
+			e.target.parentNode.reset();
+			return;
+		}
+	}
 
-  reader.onload = function(file) {
-  var content = file.target.result,
-  rows = file.target.result.split(/[\r\n|\n]+/),
-  i = 0,
-  labels = [],
-  data = [],
-  tempData;
+	function handleFileSelects(){
+		var file = document.getElementById("files").files[0],
+			reader = new FileReader();
 
-  for (; i < rows.length; i++){
-	     tempData = rows[i].split(',')
+	reader.onload = function(file) {
+		var content = file.target.result,
+			rows = file.target.result.split(/[\r\n|\n]+/),
+			i = 0,
+			labels = [],
+			data = [],
+			nameDataLog=[],
+			tempData,
+			nameData;
+		for (; i < rows.length; i++){
+			tempData = rows[i].split(',');
+			nameData= tempData[0];
+							nameDataLog.push(nameData);
 
-	     if (i === 0) {
-	     labels = tempData;
-	     }
+			if (i === 0) {
+				labels = tempData;
+			}
 
-	     //If you dont' want labels in the dataset then put this in the else statement
-			   data.push(tempData);
-			   }
+			//If you dont' want labels in the dataset then put this in the else statement
+			else{
+			data.push(tempData);
+			}
+		}
 
+// You'll see here you have access to the full data set of data and also one called labels. Labels. I put in console logs
+nameDataLog=nameDataLog.slice(1,nameDataLog.length);
+localStorage.setItem("quentinTarantino", JSON.stringify(labels));
+localStorage.setItem("logTime", JSON.stringify(nameDataLog));
+        console.log(labels);
+	};
 
-console.log('full data set', data)
-console.log('label array', labels)
-	     };
-
-	     reader.readAsText(file);
+	reader.readAsText(file);
  }
 
  document.getElementById('the_form').addEventListener('submit', handleFileSelects, false);
- document.getElementById('files').addEventListener('change', fileInfo, false);
+ document.getElementById('the_file').addEventListener('change', fileInfo, false);
 
-</script>-->
+</script>
+
+            <div id="MyDivers" style="width: 100%; height: 500px;" align="right">
 <script>
-function toDo(){
-  var labels;
-  function fileInfo(e){
-  var file = e.target.files[0];
-  if (file.name.split(".")[1].toUpperCase() != "CSV") {
-  alert('Invalid csv file !');
-  e.target.parentNode.reset();
-  return;
-  }
-  }
-
-  function handleFileSelects(){
-  var file = document.getElementById("files").files[0],
-  reader = new FileReader();
-
-  reader.onload = function(file) {
-  var content = file.target.result,
-  rows = file.target.result.split(/[\r\n|\n]+/),
-  i = 0,
-  labels = [],
-  data = [],
-  tempData;
-
-  for (; i < rows.length; i++){
-	          tempData = rows[i].split(',')
-
-	          if (i === 0) {
-	          labels = tempData;
-	          }
-
-	          //If you dont' want labels in the dataset then put this in the else statement
-				   data.push(tempData);
-				      }
-
-
-console.log('full data set', data)
-console.log('label array', labels)
-			      };
-
-			           reader.readAsText(file);
- }
-
- document.getElementById('the_form').addEventListener('submit', handleFileSelects, false);
- document.getElementById('files').addEventListener('change', fileInfo, false);
 
 function makeplot() {
   //Plotly.d3.csv("localhost", function(data){ processData(data) } );
@@ -240,34 +199,55 @@ function makeplot() {
 
 var wait = true; 
 var zValues = [];
+
 function popData(fl) { 
 Plotly.d3.csv(fl, function(data) {
+console.time('someFunction');
 
 
 
-
-  dataset = data.map(function(d) { return [ +d["Control 1"], +d["Control 2"], +d["Exp3"], +d["Exp4"], +d["Exp5"], +d["Exp6"] ]; });
+var retrievedData = localStorage.getItem("quentinTarantino");
+var labels = JSON.parse(retrievedData);
+var array=[]
+for(var i = 1; i < labels.length; i++ ) {
+      array.push(labels[i])
+  
+}
+function t(fields) {
+  return function (data) {
+    return fields.map(function (field) {
+      return +data[field]
+    })
+  }
+}
+ <!-- dataset = data.map(function(d) { return [ +d["Control 1"], +d["Control 2"], +d["Exp3"], +d["Exp4"], +d["Exp5"], +d["Exp6"] ]; });-->
+ dataset = data.map(t(array));
      
-  console.log(Object.getOwnPropertyNames(dataset)); 
+
+     
+
     
 
  zValues = dataset; 
-  console.log(zValues); 
+ console.log(zValues); 
 
+console.timeEnd('someFunction');
 
   wait = false; 
 }); 
+
 }; 
 
   function handleFileSelect() {
     var file   = document.getElementById("files").files[0];
     var reader  = new FileReader();
 
+
   reader.addEventListener("load", function () {
     var fileURI = reader.result;
     popData(fileURI);
     console.log("fired");
-    console.log(fileURI);
+
 
 
 
@@ -280,8 +260,8 @@ Plotly.d3.csv(fl, function(data) {
 
 
   }
-     
-  }
+}     
+  
 //popData(); 
 
 function processData(allRows) {
@@ -297,10 +277,9 @@ function processData(allRows) {
   console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
   makePlotly( x, y, standard_deviation );
 }
-
 makeplot(); 
 //popData(); 
-console.log("moanao",file.labels);
+
 function setColor(){
 				  
     var x = document.createElement("INPUT");
@@ -312,12 +291,21 @@ function setColor(){
 function getResult(){
 
 
-
+				  
       if (!wait) {
-                   var xValues = labels;<!-- [' Team A', ' Team B',' Team C',' Team D',' Team E'];-->
+var retrievedData = localStorage.getItem("quentinTarantino");
+var labels = JSON.parse(retrievedData);
+var retrievedDatas = localStorage.getItem("logTime");
+var nameData = JSON.parse(retrievedDatas);
+localStorage.removeItem("logTime");
+localStorage.removeItem("quentinTarantino");
+labels=labels.slice(1,labels.length);
 
-var yValues = ['Team W', 'Team X', 'Team Y', 'Team Z'];
+                   var xValues =  labels;
 
+var yValues =  nameData;
+console.log(xValues);
+console.log(yValues);
 //console.log(zValues);
 
 var age= document.getElementsByTagName('h5')[0].style.color;
@@ -339,8 +327,11 @@ var data = [{
 }];
 
 var layout = {
-  title: 'High Performance Interactive Heatmap',
-  annotations: [],
+  title: '',
+  annotations: {
+    align: "right", 
+
+  },
   xaxis: {
     ticks: '',
     side: 'top'
@@ -350,12 +341,17 @@ var layout = {
     ticksuffix: ' ',
     width: 700,
     height: 700,
-    autosize: false
-  }
+    autosize: true
+  },
+    margin:{
+            l: 400, b: 10, r: 10, t: 200
+
+}
 };
 
-for ( var i = 0; i < yValues.length; i++ ) {
-  for ( var j = 0; j < xValues.length; j++ ) {
+for ( var i = 0; i < yValues; i++ ) {
+  for ( var j = 0; j < xValues; j++ ) {
+    console.log("erer",i,j)
     var currentValue = zValues[i][j];
     if (currentValue != 0.0) {
       var textColor = 'white';
@@ -367,7 +363,8 @@ for ( var i = 0; i < yValues.length; i++ ) {
       yref: 'y1',
       x: xValues[j],
       y: yValues[i],
-      text: zValues[i][j],
+      text: "",
+     <!-- text: zValues[i][j],-->
       font: {
         family: 'Arial',
         size: 12,
@@ -381,21 +378,31 @@ for ( var i = 0; i < yValues.length; i++ ) {
     layout.annotations.push(result);
   }
 }
+console.log("here");
+var finalsd= Plotly.newPlot('myDiv', data, layout);
+var update = {
+  width: 800,  // or any new width
+  height: 100  // " "
+};
 
-Plotly.newPlot('myDiv', data, layout);
+Plotly.relayout(finalsd, update);
       } else {
            setTimeout(getResult, 250);
       }
  }
 
 getResult(); 
-}
         </script>
+            </div>
 
-    </body>
 
-<!--<input type="file" id="files" name="files[]" onchange="handleFileSelect()" />
-<output id="list"></output>-->
+   
+
+<input type="file" id="files" name="files[]" onchange="handleFileSelect();handleFileSelects();fileInfo();myFunction" />
+
+<output id="list"></output>
+
+<div id="myDiv"></div>
 
         </body>
 </html>
