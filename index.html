@@ -6,7 +6,6 @@
 <br>
 <img src="morpheus.png" alt="matrix" style="width:304px;height:228px" align="middle";>
 <br>
-<br>
 <style>
 imager {
   position: relative;
@@ -435,14 +434,7 @@ var finalsd= Plotly.newPlot('myDiv', data, layout);
 //};
 
 Plotly.relayout(finalsd, update);
-        myDiv.on('plotly_relayout',
-    function(eventdata){  
-        alert(eventdata['xaxis.range[0]'] + '\n\n' +
-            'Event data:' + '\n' + 
-             JSON.stringify(eventdata) + '\n\n' +
-            'x-axis start:' + eventdata['xaxis.range[0]'] + '\n' +
-            'x-axis end:' + eventdata['xaxis.range[1]'] );
-    });
+       
       } else {
            setTimeout(getResult, 250);
       }
@@ -635,7 +627,25 @@ var data = [{
   colorscale: colorscaleValue,
   showscale: false
 }];
-
+    //function funrun(){
+      var eventdata=  localStorage.getItem("slimshady");
+     if(eventdata== null){
+         console.log("improv");
+        var best =0;
+        var worst = 0;
+      var   xa1= Math.round(xValues.length*.4);//Math.round(eventdata['xaxis.range[1]'].length*.4),
+     var ya1= Math.round(yValues.length*.4);
+    }else{
+        console.log("lilwayne")
+        var best =Math.round(eventdata['xaxis.range[0]']*.4);
+        var worst= Math.round(eventdata['yaxis.range[0]']*.4);
+        var xa1= Math.round(eventdata['xaxis.range[1]']*.4);
+        var ya1=Math.round(eventdata['yaxis.range[1]']*.4);
+    }
+    
+localStorage.removeItem("slimshady");
+  //  }
+console.log(best,worst,xa1,ya1);
 var layout = {
   title: '',
   shapes: [
@@ -643,10 +653,11 @@ var layout = {
       type: 'square',
       xref: 'x',
       yref: 'y',
-      x0: 0,
-      y0: 0,
-      x1: Math.round(xValues.length*.4),
-      y1: Math.round(yValues.length*.4),
+      x0: 2, //Math.round(eventdata['xaxis.range[0]']*.4),
+      y0: 5000, //Math.round(eventdata['yaxis.range[0]']*.4),
+      x1: 5,//Math.round(eventdata['xaxis.range[1]']*.4),
+      y1: 66000,//Math.round(eventdata['yaxis.range[1]']*.4),
+ 
         
       line: {
         color: 'rgba(255, 255,255, 1)',
@@ -673,7 +684,6 @@ var layout = {
 
 for ( var i = 0; i < yValues; i++ ) {
   for ( var j = 0; j < xValues; j++ ) {
-    console.log("erer",i,j)
     var currentValue = zValues[i][j];
     if (currentValue != 0.0) {
       var textColor = 'white';
@@ -705,7 +715,8 @@ console.log("here");
 
 var img_png= d3.select('#png-export');
 var svg = d3.select('#svg-export');
-Plotly.newPlot('myDiv', data, layout).then(
+var redi= Plotly.newPlot('myDiv', data, layout);
+    redi.then(
     function(gd)
      {
       Plotly.toImage(gd,{height:700,width:700})
@@ -720,6 +731,48 @@ Plotly.newPlot('myDiv', data, layout).then(
          )
     });
     
+    myDiv.on('plotly_relayout',
+    function(eventdata){  
+        console.log( eventdata["xaxis.range[0]"]);
+        console.log(layout.shapes[0]);
+       // layout.shapes[0].x0=eventdata["xaxis.range[0]"];
+       // layout.shapes[0].x1=eventdata["xaxis.range[1]"];
+       
+      Plotly.toImage(redi,{height:700,width:700})
+         .then(
+            function(url)
+         {
+             img_jpg.attr("src", url);
+             Plotly.toImage(redi,{format:'jpeg',height:700 ,width:700});
+             
+         }
+          
+         );
+        console.log("changes!");
+        console.log( eventdata["xaxis.range[0]"]);
+        console.log(layout.shapes[0].x0);
+        localStorage.setItem("slimshady", JSON.stringify(eventdata));
+        
+
+    });
+        /* myDiv.on('plotly_relayout',
+     function(redi)
+     {
+      Plotly.toImage(redi,{height:700,width:700})
+         .then(
+            function(url)
+         {
+             img_jpg.attr("src", url);
+             Plotly.toImage(redi,{format:'jpeg',height:700,width:700});
+             
+         }
+          
+         )
+    }); */
+        
+
+ 
+    
 //var update = {
   //width: 800,  // or any new width
   //height: 100  // " "
@@ -732,21 +785,11 @@ Plotly.newPlot('myDiv', data, layout).then(
 
 getResult(); 
         </script>
-                <la><div class="foo purple"></div></la>
-
+               
                 </div>
-            <script>
-var c=document.getElementById("myCanvas");
-ctx.strokeStyle="red";
 
-var ctx=c.getContext("2d");
-ctx.rect(20,20,150,100);
-                ctx.stroke() ;
-                </script>
             </div>
-<div class="foo blue"></div>
-                <la><div class="foo purple"></div></la>
-<div class="foo wine"></div>
+
 <input type="file" id="files" name="files[]" onchange="handleFileSelect();handleFileSelects();fileInfo();myFunction" />
 
 <output id="list"></output>
