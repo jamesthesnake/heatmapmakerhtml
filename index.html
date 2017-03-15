@@ -724,6 +724,7 @@ var redi= Plotly.newPlot('myDiv', data, layout);
             function(url)
          {
              img_jpg.attr("src", url);
+             console.log(gd);
              Plotly.toImage(gd,{format:'jpeg',height:700,width:700});
              
          }
@@ -735,8 +736,8 @@ var redi= Plotly.newPlot('myDiv', data, layout);
     function(eventdata){  
         console.log( eventdata["xaxis.range[0]"]);
         console.log(layout.shapes[0]);
-       // layout.shapes[0].x0=eventdata["xaxis.range[0]"];
-       // layout.shapes[0].x1=eventdata["xaxis.range[1]"];
+        layout.shapes[0].x0=eventdata["xaxis.range[0]"];
+        layout.shapes[0].x1=eventdata["xaxis.range[1]"];
        
       Plotly.toImage(redi,{height:700,width:700})
          .then(
@@ -752,7 +753,7 @@ var redi= Plotly.newPlot('myDiv', data, layout);
         console.log( eventdata["xaxis.range[0]"]);
         console.log(layout.shapes[0].x0);
         localStorage.setItem("slimshady", JSON.stringify(eventdata));
-        
+        localStorage.setItem("heres",JSON.stringify(eventdata));
 
     });
         /* myDiv.on('plotly_relayout',
@@ -772,7 +773,7 @@ var redi= Plotly.newPlot('myDiv', data, layout);
         
 
  
-    
+    //yolo
 //var update = {
   //width: 800,  // or any new width
   //height: 100  // " "
